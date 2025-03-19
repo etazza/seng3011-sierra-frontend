@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { BarChart3, Upload } from 'lucide-react';
 import { useState } from 'react';
 import { DataUpload } from './components/DataUpload';
-import { DataVisualization } from './components/DataVisualization';
+import { DataVisualisation } from './components/DataVisualisation';
 import { Separator } from './components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 
@@ -36,9 +36,9 @@ function App() {
               <Upload className="w-4 h-4" />
               Data Collection
             </TabsTrigger>
-            <TabsTrigger value="visualization" className="flex items-center gap-2">
+            <TabsTrigger value="visualisation" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
-              Visualization
+              Visualisation
             </TabsTrigger>
           </TabsList>
 
@@ -53,14 +53,14 @@ function App() {
             </motion.div>
           </TabsContent>
 
-          <TabsContent value="visualization" className="h-[calc(100vh-12rem)]">
+          <TabsContent value="visualisation" className="h-[calc(100vh-12rem)]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="h-full"
             >
-              <DataVisualization />
+              <DataVisualisation />
             </motion.div>
           </TabsContent>
         </Tabs>

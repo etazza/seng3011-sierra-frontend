@@ -67,7 +67,7 @@ const emissionMetrics = [
   },
 ];
 
-export function DataVisualization() {
+export function DataVisualisation() {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <div className="grid gap-4 md:grid-cols-4">
