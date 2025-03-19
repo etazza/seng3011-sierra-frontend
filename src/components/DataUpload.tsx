@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 
+import { collectionBucket, collectionEndpoint } from '@/data/api';
+
 export function DataUpload() {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -33,8 +35,48 @@ export function DataUpload() {
     setUploadProgress(0);
 
     // Simulate getting a pre-signed URL from the backend
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const mockPresignedUrl = 'https://api.example.com/upload';
+    console.log("Getting request for " + file.name);
+    console.log(file.type);
+    const xhr = new XMLHttpRequest();
+    const urlWithParams = collectionEndpoint + "?file=" + file.name + "&bucket=" + collectionBucket;
+    xhr.open('GET', urlWithParams);
+    xhr.onload = function() {
+      const res = JSON.parse(xhr.response);
+      console.log(res["URL"]);
+      if (xhr.status === 200) {
+        if (res["URL"]) {
+          const xhr2 = new XMLHttpRequest();
+          xhr2.open('PUT', res["URL"]);
+          xhr2.setRequestHeader("Content-Type", "text/csv");
+          xhr2.onreadystatechange = function () {
+            if (xhr2.status === 200) {
+              setUploadProgress(100);
+              clearInterval(uploadInterval);
+              toast({
+                title: 'Upload Complete',
+                description: `Successfully uploaded ${file.name}`,
+              });
+            }
+          };
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            if (event.target && event.target.result) {
+              const blob = new Blob([event.target.result as ArrayBuffer], { type: "text/csv" });
+              xhr2.send(blob);
+            } else {
+              console.log("Error reading the file.");
+            }
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          console.log()
+          console.log("Error with url");
+        }
+      } else {
+        console.log("Error:", res);
+      }
+    }
+    xhr.send();
 
     // Simulate file upload with progress
     const totalSize = file.size;
@@ -73,7 +115,7 @@ export function DataUpload() {
       <CardHeader>
         <CardTitle>Data Upload</CardTitle>
         <CardDescription>
-          Upload your data files for analysis. Supported formats: CSV, JSON, Excel
+          Upload your data files. Supported format: CSV
         </CardDescription>
       </CardHeader>
       <CardContent className="h-[calc(100%-7rem)]">
@@ -112,7 +154,7 @@ export function DataUpload() {
                     browse
                   </label>
                 </p>
-                <p className="text-sm text-gray-500">Maximum file size: 50MB</p>
+                <p className="text-sm text-gray-500">Maximum file size: 10GB</p>
               </div>
             </div>
           ) : (

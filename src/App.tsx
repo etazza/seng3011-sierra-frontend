@@ -3,7 +3,6 @@ import { BarChart3, Upload } from 'lucide-react';
 import { useState } from 'react';
 import { DataUpload } from './components/DataUpload';
 import { DataVisualization } from './components/DataVisualization';
-import { Button } from './components/ui/button';
 import { Separator } from './components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 
@@ -26,7 +25,6 @@ function App() {
             >
               Sierra Impact
             </motion.h1>
-            <Button variant="outline">Sign In</Button>
           </div>
         </div>
       </motion.header>
