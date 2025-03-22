@@ -21,7 +21,7 @@ export function DataVisualisation() {
   const [scope2Emissions, setScope2Emissions] = useState(0);
   const [scope3Emissions, setScope3Emissions] = useState(0);
   const [companyRankings, setCompanyRankings] = useState([]);
-  const companyEmissionMap = {};
+  const companyEmissionMap : any = {};
 
   const emissionMetrics = [
     {
@@ -68,7 +68,7 @@ export function DataVisualisation() {
       { scope: 'Scope 2', emissions: scope2Emissions },
       { scope: 'Scope 3', emissions: scope3Emissions },
     ],
-    companyRankings: companyRankings.sort((a, b) => b.emissions - a.emissions),
+    companyRankings: companyRankings.sort((a: any, b: any) => b.emissions - a.emissions),
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export function DataVisualisation() {
           let local1Emissions = 0;
           let local2Emissions = 0;
           let local3Emissions = 0;
-          events.forEach((event) => {
+          events.forEach((event: any) => {
             const metricValue = parseInt(event["attribute"]["metric_value"])
             const metricName = event["attribute"]["metric_name"]
             const companyName = event["attribute"]["company_name"]
@@ -109,9 +109,9 @@ export function DataVisualisation() {
           setScope1Emissions(parseInt((local1Emissions / 1000).toFixed(0)));
           setScope2Emissions(parseInt((local2Emissions / 1000).toFixed(0)));
           setScope3Emissions(parseInt((local3Emissions / 1000).toFixed(0)));
-          let rankings = Object.keys(companyEmissionMap).map((key) => [key, parseInt(companyEmissionMap[key])]);
-          rankings.sort((a, b) => { return a[1] - b[1]; });
-          rankings = rankings.slice(0, 5).map((key) => {return { "company": key[0], "emissions": key[1]}})
+          let rankings: any = Object.keys(companyEmissionMap).map((key) => [key, parseInt(companyEmissionMap[key])]);
+          rankings.sort((a: any, b: any) => { return a[1] - b[1]; });
+          rankings = rankings.slice(0, 5).map((key: any) => {return { "company": key[0], "emissions": key[1]}})
           console.log(rankings);
           setCompanyRankings(rankings);
         }
