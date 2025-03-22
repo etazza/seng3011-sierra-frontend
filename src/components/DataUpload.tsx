@@ -34,7 +34,6 @@ export function DataUpload() {
     setSelectedFile(file);
     setUploadProgress(0);
 
-    // Simulate getting a pre-signed URL from the backend
     console.log("Getting request for " + file.name);
     console.log(file.type);
     const xhr = new XMLHttpRequest();
