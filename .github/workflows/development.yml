@@ -11,13 +11,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Set Environment Variables
+        run: echo "VITE_ENV=dev" > .env.development
 
-      - name: Build Project
-        if: github.ref == 'refs/heads/dev'
+      - name: Install Dependencies & Build Project
         run: |
-          echo "REACT_APP_ENV=dev" > .env
+          npm install
+          rm -rf node_modules/.cache
+          rm -rf dist
           npm run build
 
       - name: Deploy to S3
