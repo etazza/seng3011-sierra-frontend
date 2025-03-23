@@ -73,6 +73,7 @@ export function DataVisualisation() {
 
   useEffect(() => {
     console.log("Getting data from backend");
+    console.log(retrievalJSONEndpoint);
     const xhr = new XMLHttpRequest();
     xhr.open('GET', retrievalJSONEndpoint);
     xhr.onload = function() {

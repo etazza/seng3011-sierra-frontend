@@ -36,6 +36,8 @@ export function DataUpload() {
 
     console.log("Getting request for " + file.name);
     console.log(file.type);
+    console.log(collectionBucket);
+    console.log(collectionEndpoint);
     const xhr = new XMLHttpRequest();
     const urlWithParams = collectionEndpoint + "?file=" + file.name + "&bucket=" + collectionBucket;
     xhr.open('GET', urlWithParams);
