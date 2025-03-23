@@ -17,7 +17,7 @@ jobs:
       - name: Build Project
         if: github.ref == 'refs/heads/production'
         run: |
-          cp .env.production .env
+          echo "REACT_APP_ENV=prod" > .env
           npm run build
 
       - name: Deploy to S3
