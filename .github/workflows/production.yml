@@ -15,7 +15,10 @@ jobs:
         run: npm install
 
       - name: Build Project
-        run: npm run build
+        if: github.ref == 'refs/heads/production'
+        run: |
+          cp .env.production .env
+          npm run build
 
       - name: Deploy to S3
         run: |
