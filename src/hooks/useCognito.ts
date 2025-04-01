@@ -67,7 +67,9 @@ export const useCognito = () => {
       });
 
       if (!response.ok) {
-        console.log(response.text);
+        console.log(response.text());
+        console.log(response.body);
+        console.log(response.statusText);
         throw new Error('Failed to fetch access token');
       }
 
