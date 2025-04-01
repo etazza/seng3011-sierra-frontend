@@ -51,6 +51,8 @@ export const useCognito = () => {
   // Exchange authorization code for access token
   const fetchAccessToken = async (authCode: string) => {
     try {
+      console.log("Client ID:", CLIENT_ID);
+      console.log("Client Secret:", CLIENT_SECRET);
       const response = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
         method: 'POST',
         headers: {
