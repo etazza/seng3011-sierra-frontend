@@ -14,6 +14,9 @@ jobs:
       - name: Set Environment Variables
         run: echo "VITE_ENV=dev\nVITE_COGNITO_DOMAIN=${{ secrets.COGNITO_DOMAIN }}\nVITE_CLIENT_ID=${{ secrets.CLIENT_ID }}\nVITE_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" > .env.development
 
+      - name: Debug Environment Variables
+        run: cat .env.development
+
       - name: Install Dependencies & Build Project
         run: |
           npm install

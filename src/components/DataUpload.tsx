@@ -3,6 +3,8 @@ import { useCognito } from '../hooks/useCognito';
 export const DataUpload = () => {
   const { user, logout, login } = useCognito();
 
+  console.log(import.meta.env);
+
   if (!user) {
     return (
       <div className="text-center">
