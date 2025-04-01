@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { frontend } from '../data/api';
+import { cognitoDomain, clientId, clientSecret } from '../data/api';
 
-const COGNITO_DOMAIN = process.env.COGNITO_DOMAIN || "";
-const CLIENT_ID = process.env.CLIENT_ID || "";
-const CLIENT_SECRET = process.env.CLIENT_SECRET || "";
+const COGNITO_DOMAIN = cognitoDomain;
+const CLIENT_ID = clientId;
+const CLIENT_SECRET = clientSecret;
 const REDIRECT_URI = frontend;
 
 export const useCognito = () => {
