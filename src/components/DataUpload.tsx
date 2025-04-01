@@ -20,7 +20,10 @@ export const DataUpload = () => {
   return (
     <div>
       <h2>Upload Data</h2>
-      <button onClick={logout} className="bg-red-500 text-white p-2 rounded">
+      <button
+        onClick={logout}
+        className="bg-red-500 text-white p-2 rounded"
+      >
         Logout
       </button>
     </div>

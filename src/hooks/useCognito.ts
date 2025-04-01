@@ -10,22 +10,26 @@ export const useCognito = () => {
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
 
+  // On initial load or when the auth code is present
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const authCode = urlParams.get('code');
+    const authCode = urlParams.get('code'); // Check if auth code exists in URL
 
     if (authCode && !user) {
-      fetchAccessToken(authCode);
+      fetchAccessToken(authCode); // Exchange auth code for access token
     } else {
+      // If token is stored and valid, set user
       const storedToken = localStorage.getItem('access-token');
       if (storedToken && isTokenValid(storedToken)) {
         setUser({ token: storedToken });
+        navigate('/upload'); // Redirect to the upload page if user is authenticated
       } else {
         setUser(null);
       }
     }
   }, []);
 
+  // Check if the stored token is still valid
   const isTokenValid = (token: string): boolean => {
     try {
       const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
@@ -37,11 +41,13 @@ export const useCognito = () => {
     }
   };
 
+  // Initiate login by redirecting to Cognito
   const login = () => {
     const loginUrl = `${COGNITO_DOMAIN}/login?client_id=${CLIENT_ID}&response_type=code&scope=default-m2m-resource-server-u1isj%2Fread&redirect_uri=${REDIRECT_URI}`;
     window.location.href = loginUrl; // Redirect to Cognito login page
   };
 
+  // Exchange authorization code for access token
   const fetchAccessToken = async (authCode: string) => {
     try {
       const response = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
@@ -60,19 +66,20 @@ export const useCognito = () => {
       if (!response.ok) throw new Error('Failed to fetch access token');
 
       const data = await response.json();
-      localStorage.setItem('access-token', data.id_token);
-      setUser({ token: data.id_token });
+      localStorage.setItem('access-token', data.id_token); // Store the ID token
+      setUser({ token: data.id_token }); // Set user data in state
 
-      navigate('/upload');
+      navigate('/upload'); // Redirect to the upload page after successful login
     } catch (error) {
       console.error('Error fetching access token:', error);
       setUser(null);
     }
   };
 
+  // Logout user by clearing token and redirecting to Cognito logout endpoint
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('access-token');
+    localStorage.removeItem('access-token'); // Remove token from storage
 
     // Redirect user to Cognito logout endpoint
     const logoutUrl = `${COGNITO_DOMAIN}/logout?client_id=${CLIENT_ID}&logout_uri=${REDIRECT_URI}`;
