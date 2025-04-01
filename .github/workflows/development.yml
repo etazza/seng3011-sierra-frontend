@@ -13,13 +13,13 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-             echo "VITE_COGNITO_DOMAIN=${{ secrets.COGNITO_DOMAIN }}" >> .env.development
-             echo "VITE_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env.development
-             echo "VITE_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env.development
-             echo "VITE_ENV=dev" >> .env.development
+             echo "VITE_COGNITO_DOMAIN=${{ secrets.COGNITO_DOMAIN }}" >> .env.production
+             echo "VITE_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env.production
+             echo "VITE_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env.production
+             echo "VITE_ENV=dev" >> .env.production
 
       - name: Debug Environment Variables
-        run: cat .env.development
+        run: cat .env.production
 
       - name: Install Dependencies & Build Project
         run: |
