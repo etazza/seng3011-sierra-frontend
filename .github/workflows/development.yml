@@ -12,7 +12,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set Environment Variables
-        run: echo "VITE_ENV=dev\nVITE_COGNITO_DOMAIN=${{ secrets.COGNITO_DOMAIN }}\nVITE_CLIENT_ID=${{ secrets.CLIENT_ID }}\nVITE_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" > .env.development
+        run: |
+             echo "VITE_COGNITO_DOMAIN=${{ secrets.COGNITO_DOMAIN }}" >> .env.development
+             echo "VITE_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env.development
+             echo "VITE_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> .env.development
+             echo "VITE_ENV=dev" >> .env.development
 
       - name: Debug Environment Variables
         run: cat .env.development
