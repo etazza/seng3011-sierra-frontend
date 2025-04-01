@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { frontend } from '../data/api';
 
-const COGNITO_DOMAIN = 'https://ap-southeast-2t9fzemfbo.auth.ap-southeast-2.amazoncognito.com';
-const CLIENT_ID = '3v7ki1aici8sehh86o37b68nbm';
+const COGNITO_DOMAIN = process.env.COGNITO_DOMAIN || "";
+const CLIENT_ID = process.env.CLIENT_ID || "";
+const CLIENT_SECRET = process.env.CLIENT_SECRET || "";
 const REDIRECT_URI = frontend;
 
 export const useCognito = () => {
@@ -58,6 +59,7 @@ export const useCognito = () => {
         body: new URLSearchParams({
           grant_type: 'authorization_code',
           client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
           code: authCode,
           redirect_uri: REDIRECT_URI,
         }),
