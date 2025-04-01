@@ -33,9 +33,11 @@ export const DataUpload = () => {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           alert('File uploaded successfully');
         })
         .catch((error) => {
+          console.log(error);
           alert('Error uploading file');
         });
     }
