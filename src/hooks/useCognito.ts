@@ -52,8 +52,6 @@ export const useCognito = () => {
   // Exchange authorization code for access token
   const fetchAccessToken = async (authCode: string) => {
     try {
-      console.log("Client ID:", CLIENT_ID);
-      console.log("Client Secret:", CLIENT_SECRET);
       const response = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
         method: 'POST',
         headers: {
@@ -68,7 +66,10 @@ export const useCognito = () => {
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to fetch access token');
+      if (!response.ok) {
+        console.log(response.text);
+        throw new Error('Failed to fetch access token');
+      }
 
       const data = await response.json();
       localStorage.setItem('access-token', data.id_token); // Store the ID token
