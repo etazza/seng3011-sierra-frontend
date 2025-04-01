@@ -1,17 +1,14 @@
 import { useCognito } from '../hooks/useCognito';
-import { useState } from 'react';
-import { collectionEndpoint } from '../data/api';
 
 export const DataUpload = () => {
   const { user, logout, login } = useCognito();
-  const [file, setFile] = useState<File | null>(null);
 
   if (!user) {
     return (
       <div className="text-center">
         <p>You need to be logged in to access this page.</p>
         <button
-          onClick={login}  // Call Cognito login flow
+          onClick={login}
           className="bg-green-500 text-white p-2 rounded"
         >
           Login

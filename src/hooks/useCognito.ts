@@ -15,16 +15,27 @@ export const useCognito = () => {
     const authCode = urlParams.get('code');
 
     if (authCode && !user) {
-      // Exchange authorization code for access token
       fetchAccessToken(authCode);
     } else {
-      // Check if an access token is already stored
-      const accessToken = localStorage.getItem('access-token');
-      if (accessToken) {
-        setUser({ token: accessToken });
+      const storedToken = localStorage.getItem('access-token');
+      if (storedToken && isTokenValid(storedToken)) {
+        setUser({ token: storedToken });
+      } else {
+        setUser(null);
       }
     }
   }, []);
+
+  const isTokenValid = (token: string): boolean => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      const expiry = payload.exp * 1000; // Convert to milliseconds
+      return expiry > Date.now(); // Token is valid if it's not expired
+    } catch (error) {
+      console.log(error);
+      return false; // Invalid token
+    }
+  };
 
   const login = () => {
     const loginUrl = `${COGNITO_DOMAIN}/login?client_id=${CLIENT_ID}&response_type=code&scope=default-m2m-resource-server-u1isj%2Fread&redirect_uri=${REDIRECT_URI}`;
@@ -49,10 +60,10 @@ export const useCognito = () => {
       if (!response.ok) throw new Error('Failed to fetch access token');
 
       const data = await response.json();
-      localStorage.setItem('access-token', data.access_token);
-      setUser({ token: data.access_token });
+      localStorage.setItem('access-token', data.id_token);
+      setUser({ token: data.id_token });
 
-      navigate('/upload'); // Redirect to the upload page after login
+      navigate('/upload');
     } catch (error) {
       console.error('Error fetching access token:', error);
       setUser(null);
