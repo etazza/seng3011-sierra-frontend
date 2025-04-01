@@ -1,16 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
-import { DataUpload } from './components/DataUpload';
-import { DataVisualisation } from './components/DataVisualisation';
-import { AuthContextProvider } from './contexts/AuthContext';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { DataUpload } from "./components/DataUpload";
+import { DataVisualisation } from "./components/DataVisualisation";
 
 function App() {
   return (
-    <AuthContextProvider>  {/* Authentication context provider */}
+    <Router>
       <Routes>
-        <Route path="/" element={<DataVisualisation />} />
+        <Route path="/" element={<h1>Home</h1>} />
         <Route path="/upload" element={<DataUpload />} />
+        <Route path="/visualisation" element={<DataVisualisation />} />
       </Routes>
-    </AuthContextProvider>
+    </Router>
   );
 }
 
