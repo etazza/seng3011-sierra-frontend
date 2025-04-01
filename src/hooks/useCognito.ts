@@ -68,6 +68,7 @@ export const useCognito = () => {
 
       if (!response.ok) {
         response.json().then((data) => {
+          console.log(REDIRECT_URI);
           console.log(data);
           throw new Error('Failed to fetch access token');
         }).catch((err) => {
