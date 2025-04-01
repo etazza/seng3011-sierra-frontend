@@ -78,8 +78,9 @@ export const useCognito = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem('access-token', data.id_token); // Store the ID token
-      setUser({ token: data.id_token }); // Set user data in state
+      console.log(data);
+      localStorage.setItem('access-token', data.access_token); // Store the ID token
+      setUser({ token: data.access_token }); // Set user data in state
 
       navigate('/upload'); // Redirect to the upload page after successful login
     } catch (error) {
