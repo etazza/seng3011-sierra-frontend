@@ -49,6 +49,7 @@ export function DataUpload() {
     console.log("Uploading file: " + file.name);
     const xhr = new XMLHttpRequest();
     const urlWithParams = `${collectionEndpoint}?file=${file.name}`;
+    console.log(user.token);
     xhr.open('GET', urlWithParams);
     xhr.setRequestHeader("Authorization", `Bearer ${user.token}`);
     xhr.onload = function() {
