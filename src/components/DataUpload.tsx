@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { useCognito } from '@/hooks/useCognito';
-import { collectionBucket, collectionEndpoint } from '@/data/api';
+import { collectionEndpoint } from '@/data/api';
 
 export function DataUpload() {
   const [isDragging, setIsDragging] = useState(false);
@@ -48,7 +48,8 @@ export function DataUpload() {
 
     console.log("Uploading file: " + file.name);
     const xhr = new XMLHttpRequest();
-    const urlWithParams = `${collectionEndpoint}?file=${file.name}&bucket=${collectionBucket}`;
+    const urlWithParams = `${collectionEndpoint}?file=${file.name}`;
+    xhr.setRequestHeader("Authorization", `Bearer ${user.token}`);
     xhr.open('GET', urlWithParams);
     xhr.onload = function() {
       const res = JSON.parse(xhr.response);
